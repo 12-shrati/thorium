@@ -1,27 +1,42 @@
-let obj=require('../logger/logger')
-let obj1=require('../util/helper.js')
-let obj2=require('../validator/formatter')
-let obj3=require('../loader')
 const express = require('express');
 const router = express.Router();
 
-router.get('/test-me', function (req, res) {
-    obj.printMessage("welcome to my application.I am Shrati and part of Functionup Thorium cohort")
-    obj1.information("thorium W3 D1 The topics for today is node.js module system")
-    obj1.date()
-    obj1.month()
-    obj2.str()
-    obj2.string()
-    obj2.string1()
-    res.send('My first ever api!')
-});
+// 1.
+router.get('/movies', function(req, res) {
+        res.send('["dabang","race","toofaan","queen","badla"]')
+})
 
-router.get('/hello', function (req, res) {
-    obj3.chunk()
-    obj3.tail()
-    obj3.lod()
-    obj3.pairs()
-        res.send('hello there!')
-    });
+// 2. /3.
+router.get('/movies/:movieId', function(req, res) {
+  movie=["dabang","race","toofaan","queen","badla"]
+  let value=req.params.movieId;
+  if(value>movie.length-1){
+      res.send('"use valid index"')
+    }else{
+        res.send(movie[value])
+    }
+})
+
+
+
+    // 4.
+    router.get('/films', function(req, res) {
+        res.send([ {id:1,name:'the shining'},{id:2,name:'Incendies'},{id:3,name:'rang de basanti'},{id:4,name:'finding demo'} ])
+    }) 
     
+    
+    // 5.
+    router.get('/films/:filmId', function(req, res) {
+     let films=[ {id: 1,name: 'the shining'},{id: 2,name: 'Incendies'},{id: 3,name: 'rang de basanti'},{id: 4,name: 'finding demo'} ]
+     let value=req.params.filmId;
+     let found=false;
+     for(i=0;i<films.length;i++){
+         if(films[i].id==value){
+             found=true;
+             res.send(films[i])
+             break
+         }
+     }
+    });
+
 module.exports = router;

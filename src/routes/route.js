@@ -37,170 +37,52 @@ router.get('/sol2', function(req, res) {
 })
 
 
-let players=[{
 
-    "name": "manish",
-  
-    "dob": "1/1/1995",
-  
-    "gender": "male",
-  
-    "city": "jalandhar",
-  
-    "sports": [
-  
-      "swimming"
-  
-    ],
-  
-    "bookings": [
-        
-  
-      
-  
-    ]
-  
-  },
-   
-    
-   {
-  
-    "name": "manish",
-  
-    "dob": "1/1/1995",
-  
-    "gender": "male",
-  
-    "city": "jalandhar",
-  
-    "sports": [
-  
-      "swimming"
-  
-    ],
-  
-    "bookings": [
-    {
-      
-   "bookingumber": 1,
-  
-    "sportId": "",
-  
-    "centerId": "",
-  
-   "type": "private",
-  
-   "slot": "16286598000000",
-  
-   "bookedOn": "31/08/2021",
-  
-   "bookedFor": "01/09/2021"
-    },
-    
-      
-  {
-  
-   "bookingNumber": 2,
-  
-    "sportId": "",
-  
-    "centerId": "",
-  
-   "type": "private",
-  
-   "slot": "16286518000000",
-  
-   "bookedOn": "31/08/2001",
-  
-   "bookedFor": "01/09/2001"
-  
-  }
-    
-]
-   },
-  {
-  
-    "name": "gopal",
-  
-    "dob": "1/09/1995",
-  
-    "gender": "male",
-  
-    "city": "delhi",
-  
-    "sports": [
-  
-      "soccer"
-  
-    ],
-  
-    "bookings": [
-       
-  
-    ]
-  
-  },
-  
-  {
-  
-    "name": "lokesh",
-  
-    "dob": "1/1/1990",
-  
-    "gender": "male",
-  
-    "city": "mumbai",
-  
-    "sports": [
-  
-      "soccer"
-  
-    ],
-  
-    "bookings": [
-  
-       
-    ]
-  
-  },
-     
-  ]
-
-
+let players=[]
  router.post('/players', function(req, res){
-     
-     
-     
-     for(let i=0;i<players.length;i++){
-         let name=players[i].name
-         if(name!=players[i].name){
-            let ele=req.body.element
-            players.push(ele)        
+            let playerName=req.body
+            let name=playerName.name
+            for(let i=0;i<players.length;i++){
+              if(players[i].name==name){
+                res.send("player already exist")
+              }
+            }
+            players.push(playerName)
          res.send( { data:players, status:true} )
-        }else{
-            res.send("player already exist")
-        }
-    } 
+           
+        
+     
  })
 
 
 
  router.post('/players/:playerName/bookings/:bookingId', function(req, res){
-     let value=req.params.playerName;
-     let id=req.params.bookingId
-     for(i=0;i<players.length;i++){
-         if(players[i].name!=value){
-            res.send("player not found")
-             break
-         } if(players[i].name==value && players[i].bookings.bookingNumber==id){
-             
-             res.send("id already exist")
-         }
-
-         }
-     
-        
-
+    let name=req.params.playerName
+    let isPlayerPresent=false
+    
+    for(let i=0;i<players.length;i++){
+      if(players[i].name==name){
+        isPlayerPresent=true
+      }
+    }
+     if(!isPlayerPresent){
+     return res.send("player not found")  
+    }
+    
+    let booking=req.body
+    let bookingId=req.params.bookingId
+    for(i=0;i<players.length;i++){
+      if(players[i].name==name){
+        for(let j=0;j<players[i].bookings.length;j++){
+          if(players[i].bookings[j].bookingNumber==bookingId){
+            res.send("bookingId already present in players bookings")
+          }
+        }
+          players[i].bookings.push(booking)
+          
+        }
+      }
+      res.send(players)
 
  })
   
@@ -209,3 +91,13 @@ let players=[{
 
 
 module.exports = router;
+
+// Ensure the below conditions:
+
+// 1. PlayerName and bookingId are path params You have to ensure the playerName received must exist in the players
+//  collection. If the playerName doesn’t exist in the players collection return an error message that says something
+//   relevant about player not being found. 
+
+// 2. For a valid playerName check if the bookingId is already present in the player’s booking. Again,
+//  for a repeated bookingId send an error message conveying the booking was already processed.
+//   For a relevant bookingId(which is new), add the booking object from request body to bookings array

@@ -26,7 +26,11 @@ const createbook= async function(req, res) {
 
 const getparticularbooks=async function(req,res){
   let input=req.body.bookName
- const particularbooks=await bookModel.find({bookName:{$eq:input}})
+  let year=req.body.year
+  let autName=req.body.authorName
+  let pages=req.body.totalPages
+
+ const particularbooks=await bookModel.find({bookName:{$eq:input}},{year:{$eq:year}},{authorName:{$eq:autName}},{totalPages:{$eq:pages}})
  console.log(particularbooks)
   res.send({msg:"particularbooks"})
   

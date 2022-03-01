@@ -18,21 +18,15 @@ const createbook= async function(req, res) {
   const getbookinyear=async function(req,res){
    let value=req.body.year
   const bookinyears=await bookModel.find({year:{$eq:value}})
-  console.log(bookinyears)
-   res.send({msg:"books in year"})
+    res.send({msg:bookinyears})
    
 }
 
 
 const getparticularbooks=async function(req,res){
-  let input=req.body.bookName
-  let year=req.body.year
-  let autName=req.body.authorName
-  let pages=req.body.totalPages
-
- const particularbooks=await bookModel.find({bookName:{$eq:input}},{year:{$eq:year}},{authorName:{$eq:autName}},{totalPages:{$eq:pages}})
- console.log(particularbooks)
-  res.send({msg:"particularbooks"})
+  let input=req.body  
+ const particularbooks=await bookModel.find(input) 
+  res.send({msg:particularbooks})
   
 }
 
@@ -47,7 +41,7 @@ const getinrbooks=async function(req,res){
 
 
 const getrandombooks=async function(req,res){
-  const randomBooks=await bookModel.find({ totalPages:{$gt:500}})
+  const randomBooks=await bookModel.find({$or:[{'stockAvailable':true}, {'totalPages':{$gt:500}}]})
    
  res.send({randomBooks})
  
@@ -58,8 +52,5 @@ const getrandombooks=async function(req,res){
   module.exports.getbook=getbook
   module.exports.getbookinyear=getbookinyear
   module.exports.getparticularbooks=getparticularbooks
-
-
-
   module.exports.getinrbooks=getinrbooks
   module.exports.getrandombooks=getrandombooks

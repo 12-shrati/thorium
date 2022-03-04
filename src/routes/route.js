@@ -12,13 +12,11 @@ router.post('/createPublisher',controllers1.createPublisher)
 
 router.post('/createbooks',controllers2.createBooks)
 
-router.post('/presentAuthor',controllers2.presentAuthor)
-
-
 router.get('/bookByAuthorPublisher',controllers2.bookByAuthorPublisher)
 
-// router.get('/bookWithPublisher',controllers2.bookWithPublisher)
+router.put('/updatedValuePublisher',controllers2.updatedValue)
 
+router.put('/updatedValueAuthor',controllers2.updatedValueAuthor)
 
 
     

@@ -1,11 +1,19 @@
 const express = require('express');
+const { route } = require('express/lib/application');
 const router = express.Router();
-const books=require('../bookmodel/bookschema')
-const bookscontroll=require('../controllers/bookscontroller')
+const userControll=require('../controllers/userController')
+const auth=require('../authentication/auth')
 
-router.post('/createbooks',bookscontroll.createBooks )
+router.post('/users',userControll.createUsers)
   
-router.get('/getbooks',bookscontroll.getBooks )
-  
-      
+router.post('/login',userControll.login)
+ 
+router.get('/user/:userId',auth.authentication, userControll.checkToken)
+ 
+router.put('/user/:userId',auth.authentication, userControll.updatedUser)
+
+router.delete('/user/:userId',auth.authentication, userControll.deletedUser)
 module.exports = router;
+
+
+

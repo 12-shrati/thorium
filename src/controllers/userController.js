@@ -23,24 +23,22 @@ const createUsers=async function(req, res) {
   
   
   let checkToken= async function (req, res) {    
-    let userId = req.params.userId;
-    let userDetails = await userModel.findById(userId);
+    let userDetails = await userModel.findById(req.userId);
     if (!userDetails)
       return res.send({msg: "No such user exists"});
   
     res.send({data: userDetails });
   }
+  
 
 let updatedUser=async function(req,res){
-  let uId=req.params.userId
   let attribute=req.body
-   let updated=await userModel.updateOne({_id:uId},{$set:{attribute}})
+   let updated=await userModel.findOneAndUpdate({_id:req.params.userId},{$set:attribute},{new:true})
   res.send(updated)
 }
 
 let deletedUser=async function(req,res){
-  let usId=req.params.userId
-  let deleted=await userModel.updateOne({_id:usId},{$set:{isDeleted:true}})
+  let deleted=await userModel.updateOne({_id:req.userId},{$set:{isDeleted:true}})
   res.send(deleted)
 }
   

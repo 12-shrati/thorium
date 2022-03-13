@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const books=require('../bookmodel/bookschema')
-const bookscontroll=require('../controllers/bookscontroller')
+const controllers=require('../controllers/axiosController')
 
-router.post('/createbooks',bookscontroll.createBooks )
-  
-router.get('/getbooks',bookscontroll.getBooks )
-  
+router.get('/byDistrictId',controllers.byDistrictId)
+router.get('/cityWether',controllers.cityWether) 
+router.get('/sortedCities',controllers.sortedCities)
+router.post('/memesWithText',controllers.memesText)
       
 module.exports = router;
+
+
+

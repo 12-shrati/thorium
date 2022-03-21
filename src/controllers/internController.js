@@ -1,5 +1,5 @@
 const internModel=require('../models/internModel')
-
+const collageModel=require('../models/collageModel')
 
 const isValidRequestBody = function (data) {
     return Object.keys(data).length > 0

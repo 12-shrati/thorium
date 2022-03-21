@@ -1,5 +1,5 @@
 const collageModel = require("../models/collageModel")
-const internModel=require('../models/internModel')
+const internModel = require('../models/internModel')
 
 const isValidRequestBody = function (data) {
   return Object.keys(data).length > 0
@@ -28,7 +28,7 @@ const createCollage = async function (req, res) {
     }
 
     let collageData = await collageModel.create(data)
-    res.status(201).send({ status:true,data: collageData })
+    res.status(201).send({ status: true, data: collageData })
   }
   catch (error) {
     res.status(500).send({ msg: error.message })
@@ -37,29 +37,29 @@ const createCollage = async function (req, res) {
 
 
 
-let getCollageDetails=async function(req,res){
-  try{
-    let name=req.query.name
-    if(!name){
-      return res.status(400).send({status:false,message:"name required,Bad request"})
+let getCollageDetails = async function (req, res) {
+  try {
+    let name = req.query.name
+    if (!name) {
+      return res.status(400).send({ status: false, message: "name required,Bad request" })
     }
-  let collageDetails=await collageModel.findOne({name:name})
-  let id=collageDetails._id
-  if(!collageDetails){
-    return res.status(404).send({status:false,message:"collage not found"})
+    let collageDetails = await collageModel.findOne({ name: name })
+    let id = collageDetails._id
+    if (!collageDetails) {
+      return res.status(404).send({ status: false, message: "collage not found" })
+    }
+
+    let internsDetails = await internModel.find({ collegeId: id })
+
+    res.status(200).send({ status: true, data: collageDetails, interest: internsDetails })
+
   }
-  
-  let internsDetails=await internModel.find({collegeId:id})
-  
-  res.status(200).send({status:true,data:collageDetails,interest:internsDetails})
-   
-}
-catch (error) {
-  res.status(500).send({ msg: error.message })
-}
+  catch (error) {
+    res.status(500).send({ msg: error.message })
+  }
 }
 
 
 module.exports.createCollage = createCollage
-module.exports.getCollageDetails=getCollageDetails
+module.exports.getCollageDetails = getCollageDetails
 

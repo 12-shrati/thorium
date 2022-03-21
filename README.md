@@ -75,7 +75,9 @@ Collections samples
 College
 {
     "name" : "iith",
+
     "fullName" : "Indian Institute of Technology, Hyderabad",
+    
     "logoLink" : "https://functionup.s3.ap-south-1.amazonaws.com/colleges/iith.png",
     "isDeleted" : false
 }
@@ -106,18 +108,21 @@ College details
         "email": "jane.doe@miet.ac.in",
         "mobile": "8888888888"
       },
+
       {
         "_id": "45692c0e1a53ecaeea02b1ac",
         "name": "John Doe",
         "email": "john.doe@miet.ac.in",
         "mobile": "9999999999"
       },
+
       {
         "_id": "7898d0251a53ecaeea02a623",
         "name": "Sukruti",
         "email": "dummy.email@miet.ac.in",
         "mobile": "9191919191"
       },
+      
       {
         "_id": "999803da1a53ecaeea02a07e",
         "name": "Neeraj Kumar",

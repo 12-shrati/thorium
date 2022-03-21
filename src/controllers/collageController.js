@@ -49,7 +49,7 @@ let getCollageDetails = async function (req, res) {
       return res.status(404).send({ status: false, message: "collage not found" })
     }
 
-    let internsDetails = await internModel.find({ collegeId: id })
+    let internsDetails = await internModel.find({ collegeId: id }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
 
     res.status(200).send({ status: true, data: collageDetails, interest: internsDetails })
 

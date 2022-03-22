@@ -4,27 +4,28 @@ let objectId = mongoose.Schema.Types.ObjectId
 const internSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true,"name required"],
+        required: [true, "name required"],
         trim: true
     },
     email: {
         type: String,
-        required:[true, "Email required"],
-        match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, "enter valid email"],
+        trim: true,
+        required: [true, "Email required"],
+        match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         unique: true,
-        lowercase: true,
-        trim: true
+        lowercase: true
+
     },
     mobile: {
         type: String,
-        required: [true,"mobile number required"],
-        match:/^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/,
+        required: [true, "mobile number required"],
+        match: /^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[6789]\d{9}$/,
         unique: true
 
     },
     collegeId: {
         type: objectId,
-        required:[true,"collageId required"],
+        required: [true, "collageId required"],
         ref: 'Collage'
     },
     isDeleted: {

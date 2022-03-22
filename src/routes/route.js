@@ -6,12 +6,11 @@ const internController = require('../controllers/internController')
 
 
 
-
 router.post('/functionup/colleges', collageController.createCollage)
 
-router.post('/functionup/interns',internController.createIntern)
+router.post('/functionup/interns', internController.createIntern)
 
-router.get('/functionup/collegeDetails',collageController.getCollageDetails)
+router.get('/functionup/collegeDetails', collageController.getCollageDetails)
 
 
 

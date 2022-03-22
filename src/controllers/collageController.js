@@ -23,10 +23,6 @@ const createCollage = async function (req, res) {
       return res.status(400).send({ status: false, msg: "logoLink required" })
     }
 
-    if (!(/(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/.test(data.logoLink))) {
-      return res.status(400).send({ status: false, message: "Logolink will be valid link " })
-    }
-
     let collageData = await collageModel.create(data)
     res.status(201).send({ status: true, data: collageData })
   }
@@ -39,20 +35,29 @@ const createCollage = async function (req, res) {
 
 let getCollageDetails = async function (req, res) {
   try {
+
     let collageName = req.query.name
+
     if (!collageName) {
       return res.status(400).send({ status: false, message: "name required,Bad request" })
     }
-    let collageDetails = await collageModel.findOne({ name: collageName }).select({ name: 1, fullName: 1, logoLink: 1 })
-    let id = collageDetails._id
-    if (!collageDetails) {
+    let collageData = await collageModel.findOne({ name: collageName, isDeleted: false })//.select({ name: 1, fullName: 1, logoLink: 1,_id:0 })
+
+    if (!collageData) {
       return res.status(404).send({ status: false, message: "collage not found" })
     }
 
-    let internsDetails = await internModel.find({ collegeId: id }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
-    
+    let collageDetails = {
+      name: collageData.name,
+      fullName: collageData.fullName,
+      logoLink: collageData.logoLink,
+      interests: []
+    }
+    let id = collageData._id
+    let internsDetails = await internModel.find({ collegeId: id, isDeleted: false }).select({ _id: 1, name: 1, email: 1, mobile: 1 })
 
-    res.status(200).send({ status: true, data: collageDetails, interests: internsDetails })
+    collageDetails.interests = internsDetails
+    res.status(200).send({ status: true, data: collageDetails })
 
   }
   catch (error) {
